@@ -1,4 +1,4 @@
-package com.cityseason.user.enums;
+package com.cityseason.user.domain.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;

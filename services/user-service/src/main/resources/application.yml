@@ -30,12 +30,6 @@ spring:
       server-addr: ${ip}:8848
       username: nacos
       password: ${password}
-    gateway:
-      routes:
-        - id: user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/user/**
 
 mybatis-plus:
   type-aliases-package: com.cityseason.user.domain.po
@@ -56,3 +50,7 @@ server:
 ip: 127.0.0.1
 password: lxh123456
 db_name: user_db
+
+jwt:
+  secret: lxh123456
+  expiration: 86400

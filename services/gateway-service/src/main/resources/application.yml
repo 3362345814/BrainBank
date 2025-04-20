@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    nacos:
+      server-addr: ${ip}:8848
+      username: nacos
+      password: ${password}
+      discovery:
+        namespace: public
+
+    gateway:
+      discovery:
+        locator:
+          enabled: true  # 开启从注册中心动态创建路由的功能
+      routes:
+        # 用户服务路由
+        - id: user-service
+          uri: lb://user-service  # lb表示负载均衡，后面跟服务名
+          predicates:
+            - Path=/user/**
+          # 过滤器可以修改请求或响应
+          filters:
+            - StripPrefix=0  # 不去除前缀，保留/user
+
+        # 内容服务路由
+        - id: content-service
+          uri: lb://content-service
+          predicates:
+            - Path=/content/**
+          filters:
+            - StripPrefix=0
+
+        # 订单服务路由
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+          filters:
+            - StripPrefix=0
+
+        # 推荐服务路由
+        - id: recommend-service
+          uri: lb://recommend-service
+          predicates:
+            - Path=/recommend/**
+          filters:
+            - StripPrefix=0
+
+        # 营销服务路由
+        - id: promotion-service
+          uri: lb://promotion-service
+          predicates:
+            - Path=/promotion/**
+          filters:
+            - StripPrefix=0
+
+server:
+  port: 10000  # 网关服务端口
+
+ip: 127.0.0.1
+password: lxh123456
+
+jwt:
+  secret: lxh123456
