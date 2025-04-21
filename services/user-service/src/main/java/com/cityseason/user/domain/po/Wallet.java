@@ -1,6 +1,5 @@
 package com.cityseason.user.domain.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -33,7 +32,7 @@ public class Wallet implements Serializable {
     /**
      * 钱包ID
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id")
     private Long id;
 
     /**

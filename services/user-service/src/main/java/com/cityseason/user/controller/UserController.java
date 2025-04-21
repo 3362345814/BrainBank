@@ -7,6 +7,8 @@ import com.cityseason.user.domain.dto.UserDTO;
 import com.cityseason.user.domain.vo.LoginVO;
 import com.cityseason.user.domain.vo.UserVO;
 import com.cityseason.user.service.IUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 @Slf4j
 @RequiredArgsConstructor
+@Tag(name = "用户管理", description = "用户管理相关接口")
 public class UserController {
 
     private final IUserService userService;
@@ -32,6 +35,7 @@ public class UserController {
     /**
      * 用户注册
      */
+    @Operation(summary = "用户注册")
     @PostMapping("/register")
     public Result<UserVO> register(@Valid @RequestBody RegisterDTO registerDTO) {
         try {
@@ -48,6 +52,7 @@ public class UserController {
     /**
      * 用户登录
      */
+    @Operation(summary = "用户登录")
     @PostMapping("/login")
     public Result<LoginVO> login(@Valid @RequestBody LoginDTO loginDTO) {
         try {
@@ -62,6 +67,7 @@ public class UserController {
     /**
      * 更新用户信息
      */
+    @Operation(summary = "更新用户信息")
     @PutMapping("/update")
     public Result<UserVO> updateUser(@Valid @RequestBody UserDTO userDTO,
                                      @RequestHeader("X-User-Id") Long userId) {
