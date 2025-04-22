@@ -19,4 +19,14 @@ public enum UserStatus {
         this.desc = desc;
     }
 
+    public static UserStatus fromCode(int code) {
+        for (UserStatus status : values()) {
+            if (status.getCode() == code) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("无效的状态码: " + code);
+    }
+
+
 }

@@ -3,7 +3,10 @@ package com.cityseason.user.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cityseason.common.domain.dto.PageDTO;
+import com.cityseason.common.util.RequestContext;
 import com.cityseason.user.domain.dto.LoginDTO;
 import com.cityseason.user.domain.dto.RegisterDTO;
 import com.cityseason.user.domain.dto.UserDTO;
@@ -11,6 +14,7 @@ import com.cityseason.user.domain.enums.UserRole;
 import com.cityseason.user.domain.enums.UserStatus;
 import com.cityseason.user.domain.po.User;
 import com.cityseason.user.domain.po.Wallet;
+import com.cityseason.user.domain.query.UserQuery;
 import com.cityseason.user.domain.vo.LoginVO;
 import com.cityseason.user.domain.vo.UserVO;
 import com.cityseason.user.mapper.UserMapper;
@@ -152,9 +156,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public UserVO updateUser(UserDTO userDTO, Long userId) {
+    public UserVO updateUser(UserDTO userDTO) {
         // 1. 检查用户是否存在
-        User user = getById(userId);
+        User user = getById(RequestContext.get("x-user-id"));
         if (user == null) {
             throw new RuntimeException("用户不存在");
         }
@@ -196,6 +200,52 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setUpdatedAt(LocalDateTime.now());
 
         // 7. 保存更新
+        updateById(user);
+
+        return BeanUtil.copyProperties(user, UserVO.class);
+    }
+
+    @Override
+    public PageDTO<UserVO> queryUserPage(UserQuery userQuery) {
+        User user = getById(RequestContext.get("x-user-id"));
+        // 检查用户是否是管理员
+        if (!UserRole.ADMIN.equals(user.getRole())) {
+            throw new RuntimeException("无权限");
+        }
+        Page<User> page = userQuery.toMpPage("last_login_at", false);
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(StringUtils.hasText(userQuery.getUsername()), User::getUsername, userQuery.getUsername())
+                .eq(StringUtils.hasText(userQuery.getPhone()), User::getPhone, userQuery.getPhone())
+                .eq(StringUtils.hasText(userQuery.getEmail()), User::getEmail, userQuery.getEmail())
+                .eq(userQuery.getStatus() != null, User::getStatus, userQuery.getStatus())
+                .eq(userQuery.getRole() != null, User::getRole, userQuery.getRole())
+                .ge(userQuery.getLastLoginAtMin() != null, User::getLastLoginAt, userQuery.getLastLoginAtMin())
+                .le(userQuery.getLastLoginAtMax() != null, User::getLastLoginAt, userQuery.getLastLoginAtMax());
+
+
+        page(page, wrapper);
+
+        return PageDTO.of(page, UserVO.class);
+    }
+
+    @Override
+    public UserVO updateUserStatus(Long id, UserStatus status) {
+        User requestUser = getById(RequestContext.get("x-user-id"));
+        // 检查用户是否是管理员
+        if (!UserRole.ADMIN.equals(requestUser.getRole())) {
+            throw new RuntimeException("无权限");
+        }
+        // 检查用户是否存在
+        User user = getById(id);
+        if (user == null) {
+            throw new RuntimeException("用户不存在");
+        }
+
+        // 设置新的状态
+        user.setStatus(status);
+        user.setUpdatedAt(LocalDateTime.now());
+
+        // 更新用户状态
         updateById(user);
 
         return BeanUtil.copyProperties(user, UserVO.class);
