@@ -83,16 +83,13 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             }
 
             // 获取用户名
-            String username = jwt.getPayload().getClaimsJson().getStr("username");
-
             // 将用户信息传递给下游服务
             ServerHttpRequest newRequest = request.mutate()
                     .header("X-User-Id", userId.toString())
-                    .header("X-Username", username)
                     .build();
 
             // 使用新的请求头继续过滤链
-            log.info("token验证通过，用户ID：{}，用户名：{}", userId, username);
+            log.info("token验证通过，用户ID：{}", userId);
             return chain.filter(exchange.mutate().request(newRequest).build());
         } catch (Exception e) {
             log.error("验证token失败：", e);

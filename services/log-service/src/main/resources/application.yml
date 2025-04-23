@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: log-service
+  datasource:
+    url: jdbc:mysql://localhost:3307/logs?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: lxh123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      server-addr: ${ip}:8848
+      username: nacos
+      password: ${password}
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 5000
+            readTimeout: 5000
+            loggerLevel: basic
+      circuitbreaker:
+        enabled: true
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.cityseason.log.domain.po
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+  global-config:
+    db-config:
+      id-type: assign_id
+
+
+ip: 127.0.0.1
+password: lxh123456
+db_name: logs
+
+
+server:
+  port: 9080
+

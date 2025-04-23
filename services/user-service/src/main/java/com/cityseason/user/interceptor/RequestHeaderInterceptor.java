@@ -26,8 +26,7 @@ public class RequestHeaderInterceptor implements HandlerInterceptor {
 
             // 选择性地保存某些请求头，比如认证信息、用户ID等
             if (headerName.equalsIgnoreCase("Authorization") ||
-                    headerName.equalsIgnoreCase("X-User-Id") ||
-                    headerName.equalsIgnoreCase("X-Username")) {
+                    headerName.equalsIgnoreCase("X-User-Id")) {
                 RequestContext.set(headerName, headerValue);
                 log.info("Header {}: {}", headerName, headerValue);
             }
