@@ -1,4 +1,4 @@
-package com.cityseason.content.interceptor;
+package com.cityseason.common.interceptor;
 
 import com.cityseason.common.util.RequestContext;
 import jakarta.servlet.http.HttpServletRequest;

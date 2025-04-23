@@ -138,7 +138,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         String token = jwtUtil.generateToken(user.getId(), user.getUsername());
 
         // 6. 查询用户钱包
-        Wallet wallet = walletService.getOne(new LambdaQueryWrapper<Wallet>().eq(Wallet::getUserId, user.getId()));
+        Wallet wallet = walletService.getWalletByUserId(user.getId());
 
         // 6.1. 如果钱包不存在，创建钱包
         if (wallet == null) {

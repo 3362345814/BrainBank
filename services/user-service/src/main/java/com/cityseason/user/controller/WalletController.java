@@ -36,9 +36,9 @@ public class WalletController {
      */
     @PostMapping("/deduct")
     @OperationLog(module = "钱包", operation = "扣减余额")
-    public Result<Wallet> deductBalance(@RequestParam BigDecimal money) {
+    public Result<Wallet> deductBalance(@RequestParam Long userId, BigDecimal money) {
         try {
-            Wallet userVO = walletService.deductBalance(money);
+            Wallet userVO = walletService.deductBalance(userId, money);
             return Result.success(userVO);
         } catch (Exception e) {
             return Result.failure(400, e.getMessage());
@@ -53,9 +53,9 @@ public class WalletController {
      */
     @PostMapping("/add")
     @OperationLog(module = "钱包", operation = "增加余额")
-    public Result<Wallet> addBalance(@RequestParam BigDecimal money) {
+    public Result<Wallet> addBalance(@RequestParam Long userId, BigDecimal money) {
         try {
-            Wallet userVO = walletService.addBalance(money);
+            Wallet userVO = walletService.addBalance(userId, money);
             return Result.success(userVO);
         } catch (Exception e) {
             return Result.failure(400, e.getMessage());

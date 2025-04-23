@@ -2,6 +2,8 @@ package com.cityseason.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cityseason.common.annotation.AddCache;
+import com.cityseason.common.annotation.DelCache;
 import com.cityseason.common.util.RequestContext;
 import com.cityseason.user.domain.po.User;
 import com.cityseason.user.domain.po.Wallet;
@@ -26,32 +28,26 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class WalletServiceImpl extends ServiceImpl<WalletMapper, Wallet> implements IWalletService {
 
-    private final WalletMapper walletMapper;
-
     private final UserMapper userMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Wallet deductBalance(BigDecimal money) {
+    @DelCache(prefix = "user:wallet")
+    public Wallet deductBalance(Long userId, BigDecimal money) {
         // 1. 获取用户ID（从安全上下文）
         User user = userMapper.selectById(RequestContext.getCurrentUserId());
-        if (user == null) {
-            throw new RuntimeException("用户不存在");
+        if (user == null || !user.getId().equals(userId)) {
+            throw new RuntimeException("无权限");
         }
 
         // 2. 验证支付密码（如果需要）
         // verifyPaymentPassword(userId, deductBalanceDTO.getPaymentPassword());
 
         // 3. 查询并锁定钱包记录（悲观锁方式）
-        LambdaQueryWrapper<Wallet> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Wallet::getUserId, user.getId());
-        Wallet wallet = walletMapper.selectOne(wrapper);
-        if (wallet == null) {
-            throw new RuntimeException("钱包不存在");
-        }
+        Wallet wallet = getWalletByUserId(user.getId());
 
         // 4. 检查余额是否充足
-        if (money.compareTo(BigDecimal.ZERO) <= 0) {
+        if (money.compareTo(java.math.BigDecimal.ZERO) <= 0) {
             throw new RuntimeException("金额必须大于零");
         }
 
@@ -64,30 +60,26 @@ public class WalletServiceImpl extends ServiceImpl<WalletMapper, Wallet> impleme
         wallet.setTotalExpense(wallet.getTotalExpense().add(money));
 
 
-        walletMapper.updateById(wallet);
+        updateById(wallet);
         // 6. 返回扣款结果
         return wallet;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Wallet addBalance(BigDecimal money) {
+    @DelCache(prefix = "user:wallet")
+    public Wallet addBalance(Long userId, BigDecimal money) {
         // 1. 获取用户ID（从安全上下文）
         User user = userMapper.selectById(RequestContext.getCurrentUserId());
-        if (user == null) {
-            throw new RuntimeException("用户不存在");
+        if (user == null || !user.getId().equals(userId)) {
+            throw new RuntimeException("无权限");
         }
 
         // 2. 验证支付密码（如果需要）
         // verifyPaymentPassword(userId, deductBalanceDTO.getPaymentPassword());
 
         // 3. 查询并锁定钱包记录（悲观锁方式）
-        LambdaQueryWrapper<Wallet> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Wallet::getUserId, user.getId());
-        Wallet wallet = walletMapper.selectOne(wrapper);
-        if (wallet == null) {
-            throw new RuntimeException("钱包不存在");
-        }
+        Wallet wallet = getWalletByUserId(user.getId());
 
         if (money.compareTo(BigDecimal.ZERO) <= 0) {
             throw new RuntimeException("金额必须大于零");
@@ -97,8 +89,23 @@ public class WalletServiceImpl extends ServiceImpl<WalletMapper, Wallet> impleme
         wallet.setBalance(wallet.getBalance().add(money));
         wallet.setTotalIncome(wallet.getTotalIncome().add(money));
 
-        walletMapper.updateById(wallet);
+        updateById(wallet);
         // 6. 返回扣款结果
         return wallet;
     }
+
+    @Override
+    @AddCache(prefix = "user:wallet", expire = 1800)
+    public Wallet getWalletByUserId(Long userId) {
+        LambdaQueryWrapper<Wallet> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Wallet::getUserId, userId);
+        Wallet wallet = getOne(wrapper);
+        if (wallet == null) {
+            throw new RuntimeException("钱包不存在");
+        }
+
+        return wallet;
+    }
+
+
 }

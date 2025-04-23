@@ -1,4 +1,4 @@
-package com.cityseason.user.aspect;
+package com.cityseason.common.aspect;
 
 import com.cityseason.log.annotation.OperationLog;
 import com.cityseason.log.client.LogClient;
@@ -30,14 +30,14 @@ import java.util.Arrays;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class UserLogAspect {
+public class LogAspect {
     private final ObjectMapper objectMapper;
     private final LogClient logClient;
 
     /**
-     * 定义切点，拦截用户服务controller包下的所有方法
+     * 定义切点，拦截controller包下的所有方法
      */
-    @Pointcut("execution(public * com.cityseason.user.controller.*.*(..))")
+    @Pointcut("execution(public * com.cityseason.*.controller.*.*(..))")
     public void controllerLog() {
     }
 

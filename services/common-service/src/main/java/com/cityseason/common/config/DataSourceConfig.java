@@ -1,4 +1,4 @@
-package com.cityseason.content.config;
+package com.cityseason.common.config;
 
 import com.baomidou.dynamic.datasource.plugin.MasterSlaveAutoRoutingPlugin;
 import org.springframework.context.annotation.Bean;

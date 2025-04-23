@@ -15,8 +15,10 @@ import java.math.BigDecimal;
  */
 public interface IWalletService extends IService<Wallet> {
 
-    Wallet deductBalance(BigDecimal money);
+    Wallet deductBalance(Long userId, BigDecimal money);
 
-    Wallet addBalance(BigDecimal money);
+    Wallet addBalance(Long userId, BigDecimal money);
+
+    Wallet getWalletByUserId(Long userId);
 
 }

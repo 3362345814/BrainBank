@@ -1,6 +1,6 @@
-package com.cityseason.user.config;
+package com.cityseason.common.config;
 
-import com.cityseason.user.interceptor.RequestHeaderInterceptor;
+import com.cityseason.common.interceptor.RequestHeaderInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

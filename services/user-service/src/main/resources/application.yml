@@ -31,6 +31,17 @@ spring:
       username: nacos
       password: ${password}
 
+  data:
+    redis:
+      timeout: 6000
+      database: 0
+      password: ${password}
+      sentinel:
+        nodes:
+          - ${ip}:26379 # 哨兵节点地址，请替换为你的实际地址
+        master: mymaster
+
+
 mybatis-plus:
   type-aliases-package: com.cityseason.user.domain.po
   mapper-locations: classpath*:/mapper/**/*.xml
