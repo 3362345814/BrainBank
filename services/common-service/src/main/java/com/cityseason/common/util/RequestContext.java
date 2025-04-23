@@ -24,6 +24,10 @@ public class RequestContext {
         return CONTEXT.get().get(key);
     }
 
+    public static String getCurrentUserId() {
+        return get("x-user-id");
+    }
+
     public static void remove() {
         CONTEXT.remove();
     }

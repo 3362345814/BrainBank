@@ -158,7 +158,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public UserVO updateUser(UserDTO userDTO) {
         // 1. 检查用户是否存在
-        User user = getById(RequestContext.get("x-user-id"));
+        User user = getById(RequestContext.getCurrentUserId());
         if (user == null) {
             throw new RuntimeException("用户不存在");
         }
@@ -207,7 +207,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public PageDTO<UserVO> queryUserPage(UserQuery userQuery) {
-        User user = getById(RequestContext.get("x-user-id"));
+        User user = getById(RequestContext.getCurrentUserId());
         // 检查用户是否是管理员
         if (!UserRole.ADMIN.equals(user.getRole())) {
             throw new RuntimeException("无权限");
@@ -230,7 +230,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public UserVO updateUserStatus(Long id, UserStatus status) {
-        User requestUser = getById(RequestContext.get("x-user-id"));
+        User requestUser = getById(RequestContext.getCurrentUserId());
         // 检查用户是否是管理员
         if (!UserRole.ADMIN.equals(requestUser.getRole())) {
             throw new RuntimeException("无权限");
