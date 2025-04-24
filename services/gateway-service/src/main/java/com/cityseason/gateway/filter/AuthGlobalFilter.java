@@ -33,15 +33,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
     // 定义不需要验证的路径
     private static final List<String> WHITE_LIST = Arrays.asList(
             "/user/login",
-            "/user/register",
-            // Swagger相关路径
-            "/v3/api-docs",
-            "/**/v3/api-docs",
-            "/v3/api-docs/**",
-            "/swagger-ui",
-            "/swagger-ui/**",
-            "/swagger-resources/**",
-            "/webjars/**"
+            "/user/register"
     );
 
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
