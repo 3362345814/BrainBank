@@ -3,6 +3,9 @@ package com.cityseason.user.domain.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+/**
+ * 登录信息DTO
+ */
 @Data
 public class LoginDTO {
 

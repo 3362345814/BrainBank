@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 
 /**
- * <p>
- * 前端控制器
- * </p>
+ * 钱包管理
  *
  * @author 林心海
  * @since 2025-04-19

@@ -22,9 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 /**
- * <p>
- * 前端控制器
- * </p>
+ * 用户管理
  *
  * @author 林心海
  * @since 2025-04-19
@@ -42,6 +40,9 @@ public class UserController {
 
     /**
      * 用户注册
+     *
+     * @param registerDTO 注册信息
+     * @return 用户信息
      */
     @PostMapping("/register")
     public Result<UserVO> register(@Valid @RequestBody RegisterDTO registerDTO) {
@@ -57,6 +58,9 @@ public class UserController {
 
     /**
      * 用户登录
+     *
+     * @param loginDTO 登录信息
+     * @return 登录用户信息
      */
     @PostMapping("/login")
     public Result<LoginVO> login(@Valid @RequestBody LoginDTO loginDTO) {
@@ -96,6 +100,9 @@ public class UserController {
 
     /**
      * 更新用户信息
+     *
+     * @param userDTO 用户信息
+     * @return 用户信息
      */
     @PutMapping("/update")
     @OperationLog(module = "用户管理", operation = "更新用户信息")
@@ -109,7 +116,14 @@ public class UserController {
         }
     }
 
+    /**
+     * 查询用户列表
+     *
+     * @param userQuery 用户查询条件
+     * @return 用户列表
+     */
     @GetMapping("/page")
+    @OperationLog(module = "用户管理", operation = "查询用户分页")
     public Result<PageDTO<UserVO>> queryUserPage(UserQuery userQuery) {
 
         try {
@@ -120,6 +134,13 @@ public class UserController {
         }
     }
 
+    /**
+     * 更新用户状态
+     *
+     * @param id     用户ID
+     * @param status 用户状态
+     * @return 用户信息
+     */
     @PutMapping("/status")
     @OperationLog(module = "用户管理", operation = "冻结/解冻用户")
     public Result<UserVO> updateUserStatus(@RequestParam Long id, @RequestParam Integer status) {

@@ -15,12 +15,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 @Slf4j
@@ -30,14 +31,21 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
     private String secret;
 
     // 定义不需要验证的路径
-    private static final Set<String> WHITE_LIST = new HashSet<>();
+    private static final List<String> WHITE_LIST = Arrays.asList(
+            "/user/login",
+            "/user/register",
+            // Swagger相关路径
+            "/v3/api-docs",
+            "/**/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-ui",
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/webjars/**"
+    );
 
-    static {
-        // 登录注册接口不需要验证
-        WHITE_LIST.add("/user/login");
-        WHITE_LIST.add("/user/register");
+    private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
-    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -46,12 +54,14 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
         // 如果是白名单中的接口，直接放行
         if (isWhiteList(path)) {
+            log.info("白名单接口，直接放行：{}", path);
             return chain.filter(exchange);
         }
 
         // 获取token
         String token = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (StrUtil.isBlank(token)) {
+            log.warn("请求未携带token，路径：{}", path);
             return unauthorized(exchange, "未授权，请先登录");
         }
 
@@ -98,7 +108,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
     }
 
     private boolean isWhiteList(String path) {
-        return WHITE_LIST.stream().anyMatch(path::startsWith);
+        return WHITE_LIST.stream().anyMatch(pattern -> pathMatcher.match(pattern, path));
     }
 
     private Mono<Void> unauthorized(ServerWebExchange exchange, String message) {

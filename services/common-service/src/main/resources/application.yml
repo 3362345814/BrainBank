@@ -1,3 +1,0 @@
-jwt:
-  secret: lxh123456
-  expiration: 86400
