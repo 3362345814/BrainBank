@@ -47,6 +47,6 @@ server:
   port: 8084
 
 
-ip: 127.0.0.1
+ip: 118.89.73.14
 password: lxh123456
 db_name: content_db

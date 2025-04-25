@@ -34,11 +34,12 @@ spring:
   data:
     redis:
       timeout: 6000
-      database: 0
       password: ${password}
       sentinel:
         nodes:
-          - ${ip}:26379 # 哨兵节点地址，请替换为你的实际地址
+          - ${ip}:26379
+          - ${ip}:26380
+          - ${ip}:26381
         master: mymaster
 
 
@@ -58,7 +59,7 @@ server:
   port: 8080
 
 
-ip: 127.0.0.1
+ip: 118.89.73.14
 password: lxh123456
 db_name: user_db
 

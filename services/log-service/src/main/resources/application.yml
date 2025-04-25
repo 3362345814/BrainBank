@@ -2,7 +2,7 @@ spring:
   application:
     name: log-service
   datasource:
-    url: jdbc:mysql://localhost:3307/logs?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://${ip}:3307/${db_name}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: lxh123456
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -33,7 +33,7 @@ mybatis-plus:
       id-type: assign_id
 
 
-ip: 127.0.0.1
+ip: 118.89.73.14
 password: lxh123456
 db_name: logs
 

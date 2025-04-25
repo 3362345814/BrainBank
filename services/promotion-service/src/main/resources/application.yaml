@@ -3,12 +3,15 @@ spring:
     name: promotion-service
   cloud:
     nacos:
-      server-addr: 127.0.0.1:8848
+      server-addr: ${ip}:8848
       username: nacos
       password: lxh123456
 
 
 
+
+
+ip: 118.89.73.14
 
 server:
   port: 8082

@@ -1,6 +1,5 @@
 package com.cityseason.user.domain.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -32,7 +31,7 @@ public class MessageUser implements Serializable {
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.NONE)
+    @TableId(value = "id")
     private Long id;
 
     /**

@@ -1,6 +1,5 @@
 package com.cityseason.user.domain.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -10,6 +9,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -31,7 +31,7 @@ public class SellerRegistration implements Serializable {
     /**
      * 主键，雪花算法
      */
-    @TableId(value = "id", type = IdType.NONE)
+    @TableId(value = "id")
     private Long id;
 
     /**
@@ -57,6 +57,12 @@ public class SellerRegistration implements Serializable {
      */
     @TableField("receiving_account")
     private Long receivingAccount;
+
+    /**
+     * 创建时间
+     */
+    @TableField("created_at")
+    private LocalDateTime createdAt;
 
 
 }
