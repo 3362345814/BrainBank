@@ -1,4 +1,4 @@
-package com.cityseason.content.domain.po;
+package com.cityseason.user.domain.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -10,7 +10,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -18,58 +17,46 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author 林心海
- * @since 2025-04-23
+ * @since 2025-04-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("comment")
-public class Comment implements Serializable {
+@TableName("seller_registration")
+public class SellerRegistration implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     /**
-     * 评论ID
+     * 主键，雪花算法
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.NONE)
     private Long id;
 
     /**
-     * 评论用户ID
+     * 用户id，关联user.id
      */
     @TableField("user_id")
     private Long userId;
 
     /**
-     * 评论内容ID
+     * 身份证号
      */
-    @TableField("content_id")
-    private Long contentId;
+    @TableField("id_number")
+    private String idNumber;
 
     /**
-     * 父评论ID
+     * 姓名
      */
-    @TableField("parent_id")
-    private Long parentId;
+    @TableField("name")
+    private String name;
 
     /**
-     * 评论正文
+     * 收款账户
      */
-    @TableField("text")
-    private String text;
-
-    /**
-     * 评分
-     */
-    @TableField("rating")
-    private Integer rating;
-
-    /**
-     * 评论时间
-     */
-    @TableField("created_at")
-    private LocalDateTime createdAt;
+    @TableField("receiving_account")
+    private Long receivingAccount;
 
 
 }

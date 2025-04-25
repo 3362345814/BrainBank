@@ -11,7 +11,7 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>order-service</module>
+        <module>payment-service</module>
         <module>recommend-service</module>
         <module>promotion-service</module>
         <module>user-service</module>

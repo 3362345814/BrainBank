@@ -45,31 +45,31 @@ public class Wallet implements Serializable {
      * 余额
      */
     @TableField("balance")
-    private BigDecimal balance;
+    private BigDecimal balance = BigDecimal.valueOf(0);
 
     /**
      * 可提现余额
      */
     @TableField("withdrawable_balance")
-    private BigDecimal withdrawableBalance;
+    private BigDecimal withdrawableBalance = BigDecimal.valueOf(0);
 
     /**
      * 总收入
      */
     @TableField("total_income")
-    private BigDecimal totalIncome;
+    private BigDecimal totalIncome = BigDecimal.valueOf(0);
 
     /**
      * 总支出
      */
     @TableField("total_expense")
-    private BigDecimal totalExpense;
+    private BigDecimal totalExpense = BigDecimal.valueOf(0);
 
     /**
      * 更新时间
      */
     @TableField("updated_at")
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
 
 }

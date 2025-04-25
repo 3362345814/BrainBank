@@ -2,20 +2,35 @@ package com.cityseason.common.domain.query;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.util.StringUtils;
 
+/**
+ * 分页查询
+ *
+ * @author 林心海
+ */
 @Data
-@Schema(description = "分页查询参数")
 public class PageQuery {
-    @Schema(description = "页码")
+
+    /**
+     * 页数
+     */
     private Long pageNo;
-    @Schema(description = "每页大小")
+    
+    /**
+     * 每页条数
+     */
     private Long pageSize;
-    @Schema(description = "排序字段")
+
+    /**
+     * 排序字段
+     */
     private String sortBy;
-    @Schema(description = "是否升序")
+
+    /**
+     * 排序顺序（默认升序）
+     */
     private Boolean isAsc = false;
 
 

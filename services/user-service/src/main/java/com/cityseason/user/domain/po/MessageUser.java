@@ -1,4 +1,4 @@
-package com.cityseason.content.domain.po;
+package com.cityseason.user.domain.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -10,7 +10,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -19,52 +18,46 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author 林心海
- * @since 2025-04-23
+ * @since 2025-04-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("ai_content_analysis")
-public class AiContentAnalysis implements Serializable {
+@TableName("message_user")
+public class MessageUser implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     /**
-     * 分析ID
+     * 主键
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.NONE)
     private Long id;
 
     /**
-     * 内容ID
+     * 消息ID
      */
-    @TableField("content_id")
-    private Long contentId;
+    @TableField("message_id")
+    private Long messageId;
 
     /**
-     * AI生成摘要
+     * 接收者
      */
-    @TableField("summary")
-    private String summary;
+    @TableField("user_id")
+    private Long userId;
 
     /**
-     * 标签
+     * 是否已读
      */
-    @TableField("keywords")
-    private String keywords;
+    @TableField("is_read")
+    private Boolean isRead;
 
     /**
-     * 置信度
+     * 阅读时间
      */
-    @TableField("confidence")
-    private BigDecimal confidence;
-
-    /**
-     * 分析时间
-     */
-    @TableField("created_at")
-    private LocalDateTime createdAt;
+    @TableField("read_at")
+    private LocalDateTime readAt;
 
 
 }

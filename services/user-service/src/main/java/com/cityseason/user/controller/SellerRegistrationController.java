@@ -1,4 +1,4 @@
-package com.cityseason.content.controller;
+package com.cityseason.user.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author 林心海
- * @since 2025-04-23
+ * @since 2025-04-25
  */
 @RestController
-@RequestMapping("/comment")
-public class CommentController {
+@RequestMapping("/seller-registration")
+public class SellerRegistrationController {
 
 }

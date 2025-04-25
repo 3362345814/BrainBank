@@ -99,12 +99,8 @@ public class WalletServiceImpl extends ServiceImpl<WalletMapper, Wallet> impleme
     public Wallet getWalletByUserId(Long userId) {
         LambdaQueryWrapper<Wallet> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Wallet::getUserId, userId);
-        Wallet wallet = getOne(wrapper);
-        if (wallet == null) {
-            throw new RuntimeException("钱包不存在");
-        }
 
-        return wallet;
+        return getOne(wrapper);
     }
 
 

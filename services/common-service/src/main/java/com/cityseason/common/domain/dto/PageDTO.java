@@ -2,7 +2,6 @@ package com.cityseason.common.domain.dto;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,16 +11,29 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * 分页查询结果
+ *
+ * @param <T> 数据类型
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "分页结果")
 public class PageDTO<T> {
-    @Schema(description = "总条数")
+
+    /**
+     * 总记录数
+     */
     private Long total;
-    @Schema(description = "总页数")
+
+    /**
+     * 总页数
+     */
     private Long pages;
-    @Schema(description = "集合")
+
+    /**
+     * 数据列表
+     */
     private List<T> list;
 
 
