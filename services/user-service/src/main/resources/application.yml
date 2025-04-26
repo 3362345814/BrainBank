@@ -42,6 +42,12 @@ spring:
           - ${ip}:26381
         master: mymaster
 
+  rabbitmq:
+    host: ${ip}
+    port: 5672
+    username: rabbitmq
+    password: ${password}
+
 
 mybatis-plus:
   type-aliases-package: com.cityseason.user.domain.po

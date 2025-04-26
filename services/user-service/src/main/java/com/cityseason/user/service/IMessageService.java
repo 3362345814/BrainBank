@@ -1,11 +1,14 @@
 package com.cityseason.user.service;
 
-import com.cityseason.user.domain.po.Message;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cityseason.user.domain.dto.MessageDTO;
+import com.cityseason.user.domain.po.Message;
+import com.cityseason.user.domain.vo.MessageVO;
+import jakarta.validation.Valid;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author 林心海
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IMessageService extends IService<Message> {
 
+    MessageVO sendSystemMessage(@Valid MessageDTO messageDTO, Long[] userIds);
+
+    MessageVO sendCreatorMessage(@Valid MessageDTO messageDTO);
 }

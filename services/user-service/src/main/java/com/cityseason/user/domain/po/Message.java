@@ -3,6 +3,7 @@ package com.cityseason.user.domain.po;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.cityseason.user.domain.enums.MessageType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -47,16 +48,23 @@ public class Message implements Serializable {
     private String content;
 
     /**
+     * 消息发送者ID
+     */
+    @TableField("user_id")
+    private Long userId;
+
+
+    /**
      * 消息类型（0=系统通知，1=活动消息，2=创作者通知，3=私信）
      */
     @TableField("type")
-    private Integer type;
+    private MessageType type;
 
     /**
      * 创建时间
      */
     @TableField("created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 
 }

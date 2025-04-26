@@ -50,7 +50,7 @@ public class MessageUser implements Serializable {
      * 是否已读
      */
     @TableField("is_read")
-    private Boolean isRead;
+    private Boolean isRead = false;
 
     /**
      * 阅读时间
