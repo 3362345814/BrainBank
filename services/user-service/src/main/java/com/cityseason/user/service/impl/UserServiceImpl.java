@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cityseason.common.domain.dto.PageDTO;
 import com.cityseason.common.util.RequestContext;
+import com.cityseason.common.util.VerificationCode;
 import com.cityseason.user.domain.dto.LoginDTO;
 import com.cityseason.user.domain.dto.RegisterDTO;
 import com.cityseason.user.domain.dto.UserDTO;
@@ -249,5 +250,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         updateById(user);
 
         return BeanUtil.copyProperties(user, UserVO.class);
+    }
+
+    @Override
+    public String sendVerificationCode(String phone) {
+        return VerificationCode.generate(phone);
     }
 }

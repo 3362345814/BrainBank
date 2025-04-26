@@ -2,6 +2,7 @@ package com.cityseason.common.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class RequestContext {
     private static final ThreadLocal<Map<String, String>> CONTEXT = new ThreadLocal<>();
@@ -24,8 +25,9 @@ public class RequestContext {
         return CONTEXT.get().get(key);
     }
 
-    public static String getCurrentUserId() {
-        return get("x-user-id");
+    public static Long getCurrentUserId() {
+        // 转换为Long类型
+        return Long.parseLong(Objects.requireNonNull(get("x-user-id")));
     }
 
     public static void remove() {

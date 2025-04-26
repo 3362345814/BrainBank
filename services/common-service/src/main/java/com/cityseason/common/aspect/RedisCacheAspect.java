@@ -15,7 +15,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Set;
 
 @Aspect
@@ -48,7 +47,7 @@ public class RedisCacheAspect {
         long expire = addCache.expire();
 
         // 生成缓存key
-        String key = prefix + "::" + Arrays.toString(point.getArgs());
+        String key = prefix + "::" + point.getArgs()[0];
 
         try {
             // 查询缓存
@@ -105,7 +104,7 @@ public class RedisCacheAspect {
             // 两种清除缓存的方式：
 
             // 1. 如果知道确切的键，直接删除指定键
-            String exactKey = prefix + "::" + "[" + args[keyIndex] + "]";
+            String exactKey = prefix + "::" + args[keyIndex];
             redisTemplate.delete(exactKey);
             log.info("删除缓存: {}", exactKey);
 

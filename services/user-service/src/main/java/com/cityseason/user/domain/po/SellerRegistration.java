@@ -56,13 +56,13 @@ public class SellerRegistration implements Serializable {
      * 收款账户
      */
     @TableField("receiving_account")
-    private Long receivingAccount;
+    private String receivingAccount;
 
     /**
      * 创建时间
      */
     @TableField("created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 
 }

@@ -33,7 +33,8 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
     // 定义不需要验证的路径
     private static final List<String> WHITE_LIST = Arrays.asList(
             "/user/login",
-            "/user/register"
+            "/user/register",
+            "/user/verification-code"
     );
 
     private final AntPathMatcher pathMatcher = new AntPathMatcher();

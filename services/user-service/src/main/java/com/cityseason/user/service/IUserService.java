@@ -31,4 +31,5 @@ public interface IUserService extends IService<User> {
 
     UserVO updateUserStatus(Long id, UserStatus status);
 
+    String sendVerificationCode(String phone);
 }

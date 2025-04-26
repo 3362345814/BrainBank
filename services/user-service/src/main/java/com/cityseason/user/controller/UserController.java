@@ -154,5 +154,22 @@ public class UserController {
 
     }
 
+    /**
+     * 发送验证码
+     *
+     * @param phone 手机号
+     * @return 验证码
+     */
+    @PostMapping("/verification-code")
+    public Result<String> sendVerificationCode(@RequestParam String phone) {
+
+        try {
+            String code = userService.sendVerificationCode(phone);
+            return Result.success(code);
+        } catch (Exception e) {
+            return Result.failure(400, e.getMessage());
+        }
+    }
+
 
 }

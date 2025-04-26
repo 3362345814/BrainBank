@@ -61,10 +61,10 @@ public class UserVO {
     /**
      * 注册时间
      */
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     /**
      * 修改时间
      */
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt = LocalDateTime.now();
 }
