@@ -34,7 +34,8 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
     private static final List<String> WHITE_LIST = Arrays.asList(
             "/user/login",
             "/user/register",
-            "/user/verification-code"
+            "/user/verification-code",
+            "/user/reset-password"
     );
 
     private final AntPathMatcher pathMatcher = new AntPathMatcher();

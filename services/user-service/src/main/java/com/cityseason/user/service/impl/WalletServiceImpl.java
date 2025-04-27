@@ -97,10 +97,7 @@ public class WalletServiceImpl extends ServiceImpl<WalletMapper, Wallet> impleme
     @Override
     @AddCache(prefix = "user:wallet", expire = 1800)
     public Wallet getWalletByUserId(Long userId) {
-        LambdaQueryWrapper<Wallet> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Wallet::getUserId, userId);
-
-        return getOne(wrapper);
+        return getOne(new LambdaQueryWrapper<Wallet>().eq(Wallet::getUserId, userId));
     }
 
 

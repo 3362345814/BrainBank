@@ -16,7 +16,7 @@ public class MessageListener {
     @RabbitListener(queues = "message-queue")
     public void handleMessage(MessageUserVO messageUserVO) {
         try {
-            WebSocketHandler.sendToUser(messageUserVO.getMessageUser().getUserId(), JSON.toJSONString(messageUserVO));
+            WebSocketHandler.sendToUser(messageUserVO.getReceiverId(), JSON.toJSONString(messageUserVO));
         } catch (Exception e) {
             throw new RuntimeException("消息发送失败");
         }

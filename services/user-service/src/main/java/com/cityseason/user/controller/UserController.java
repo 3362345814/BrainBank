@@ -1,5 +1,6 @@
 package com.cityseason.user.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.cityseason.common.domain.dto.PageDTO;
 import com.cityseason.common.domain.vo.Result;
 import com.cityseason.log.annotation.OperationLog;
@@ -7,6 +8,7 @@ import com.cityseason.log.client.LogClient;
 import com.cityseason.log.domain.po.LoginLog;
 import com.cityseason.user.domain.dto.LoginDTO;
 import com.cityseason.user.domain.dto.RegisterDTO;
+import com.cityseason.user.domain.dto.ResetPasswordDTO;
 import com.cityseason.user.domain.dto.UserDTO;
 import com.cityseason.user.domain.enums.UserStatus;
 import com.cityseason.user.domain.query.UserQuery;
@@ -146,7 +148,7 @@ public class UserController {
     public Result<UserVO> updateUserStatus(@RequestParam Long id, @RequestParam Integer status) {
 
         try {
-            UserVO userVO = userService.updateUserStatus(id, UserStatus.fromCode(status));
+            UserVO userVO = userService.updateUserStatus(id, UserStatus.of(status));
             return Result.success(userVO);
         } catch (Exception e) {
             return Result.failure(400, e.getMessage());
@@ -166,6 +168,39 @@ public class UserController {
         try {
             String code = userService.sendVerificationCode(phone);
             return Result.success(code);
+        } catch (Exception e) {
+            return Result.failure(400, e.getMessage());
+        }
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param ResetPasswordDTO 修改密码信息
+     * @return 用户信息
+     */
+    @PostMapping("/reset-password")
+    public Result<UserVO> resetPassword(@Valid @RequestBody ResetPasswordDTO ResetPasswordDTO) {
+        try {
+            UserVO userVO = userService.resetPassword(ResetPasswordDTO);
+            return Result.success(userVO);
+        } catch (Exception e) {
+            return Result.failure(400, e.getMessage());
+        }
+
+    }
+
+    /**
+     * 查询单个用户信息
+     *
+     * @param id 用户ID
+     * @return 用户信息
+     */
+    @GetMapping("/{id}")
+    public Result<UserVO> getUserById(@PathVariable Long id) {
+        try {
+            UserVO userVO = BeanUtil.copyProperties(userService.getById(id), UserVO.class);
+            return Result.success(userVO);
         } catch (Exception e) {
             return Result.failure(400, e.getMessage());
         }

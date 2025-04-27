@@ -20,10 +20,10 @@ public class RegisterDTO {
     private String username;
 
     /**
-     * 密码
+     * 密码, 必须包含大小写字母和数字，长度在6-20个字符之间
      */
     @NotBlank(message = "密码不能为空")
-    @Size(min = 6, max = 20, message = "密码长度应在6-20个字符之间")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,20}$", message = "密码必须包含大小写字母和数字，长度在6-20个字符之间")
     private String password;
 
     /**

@@ -7,15 +7,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+
+/**
+ * 返回消息VO
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageVO {
-
-    /**
-     * 主键
-     */
-    private Long id;
 
     /**
      * 消息标题
@@ -28,9 +27,9 @@ public class MessageVO {
     private String content;
 
     /**
-     * 消息发送者ID
+     * 发送者
      */
-    private Long userId;
+    private Long senderId;
 
     /**
      * 消息类型（0=系统通知，1=活动消息，2=创作者通知，3=私信）

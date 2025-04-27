@@ -20,4 +20,13 @@ public enum MessageType {
         this.code = code;
         this.desc = desc;
     }
+
+    public static MessageType of(int code) {
+        for (MessageType type : MessageType.values()) {
+            if (type.code == code) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("无效的消息类型：" + code);
+    }
 }

@@ -21,4 +21,10 @@ public class MessageDTO {
     @NotNull(message = "消息正文不能为空")
     private String content;
 
+    /**
+     * 消息类型
+     */
+    @NotNull(message = "消息类型不能为空")
+    private Integer type;
+
 }

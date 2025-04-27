@@ -70,13 +70,13 @@ public class User implements Serializable {
      * 角色
      */
     @TableField("role")
-    private UserRole role;
+    private UserRole role = UserRole.ORDINARY;
 
     /**
      * 账户状态
      */
     @TableField("status")
-    private UserStatus status;
+    private UserStatus status = UserStatus.NORMAL;
 
     /**
      * 最近登录时间
@@ -100,13 +100,12 @@ public class User implements Serializable {
      * 注册时间
      */
     @TableField("created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     /**
      * 修改时间
      */
     @TableField("updated_at")
-    private LocalDateTime updatedAt;
-
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
 }

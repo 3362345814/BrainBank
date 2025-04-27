@@ -48,11 +48,16 @@ public class Message implements Serializable {
     private String content;
 
     /**
-     * 消息发送者ID
+     * 发送者
      */
-    @TableField("user_id")
-    private Long userId;
+    @TableField("sender_id")
+    private Long senderId;
 
+    /**
+     * 接收者
+     */
+    @TableField("receiver_id")
+    private Long receiverId;
 
     /**
      * 消息类型（0=系统通知，1=活动消息，2=创作者通知，3=私信）
@@ -65,6 +70,18 @@ public class Message implements Serializable {
      */
     @TableField("created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    /**
+     * 是否已读
+     */
+    @TableField("is_read")
+    private Boolean isRead = false;
+
+    /**
+     * 阅读时间
+     */
+    @TableField("read_at")
+    private LocalDateTime readAt;
 
 
 }

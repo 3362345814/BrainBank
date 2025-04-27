@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum UserRole {
     ORDINARY(0, "普通用户"),
     CREATOR(1, "创作者"),
-    ADMIN(2, "管理员");
+    ADMIN(2, "管理员"),
+    SUPER_ADMIN(3, "超级管理员");
 
     @EnumValue
     @JsonValue
@@ -18,5 +19,14 @@ public enum UserRole {
     UserRole(int code, String desc) {
         this.code = code;
         this.desc = desc;
+    }
+
+    public static UserRole of(int code) {
+        for (UserRole type : UserRole.values()) {
+            if (type.code == code) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("无效的用户类型：" + code);
     }
 }

@@ -2,7 +2,6 @@ package com.cityseason.user.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cityseason.common.domain.dto.PageDTO;
@@ -10,6 +9,7 @@ import com.cityseason.common.util.RequestContext;
 import com.cityseason.common.util.VerificationCode;
 import com.cityseason.user.domain.dto.LoginDTO;
 import com.cityseason.user.domain.dto.RegisterDTO;
+import com.cityseason.user.domain.dto.ResetPasswordDTO;
 import com.cityseason.user.domain.dto.UserDTO;
 import com.cityseason.user.domain.enums.UserRole;
 import com.cityseason.user.domain.enums.UserStatus;
@@ -58,26 +58,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
 
         // 2. 检查用户名是否已存在
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", registerDTO.getUsername());
-        long count = this.count(queryWrapper);
+
+        long count = this.count(new LambdaQueryWrapper<User>().eq(User::getUsername, registerDTO.getUsername()));
         if (count > 0) {
             throw new RuntimeException("用户名已存在");
         }
 
         // 3. 检查手机号是否已被注册
-        queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("phone", registerDTO.getPhone());
-        count = this.count(queryWrapper);
+        count = this.count(new LambdaQueryWrapper<User>().eq(User::getPhone, registerDTO.getPhone()));
         if (count > 0) {
             throw new RuntimeException("手机号已被注册");
         }
 
         // 4. 检查邮箱是否已被注册(如果提供了邮箱)
         if (registerDTO.getEmail() != null && !registerDTO.getEmail().isEmpty()) {
-            queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("email", registerDTO.getEmail());
-            count = this.count(queryWrapper);
+            count = this.count(new LambdaQueryWrapper<User>().eq(User::getEmail, registerDTO.getEmail()));
             if (count > 0) {
                 throw new RuntimeException("邮箱已被注册");
             }
@@ -90,10 +85,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
         user.setPhone(registerDTO.getPhone());
         user.setEmail(registerDTO.getEmail());
-        user.setRole(UserRole.ORDINARY);
-        user.setStatus(UserStatus.NORMAL);
-        user.setCreatedAt(LocalDateTime.now());
-        user.setUpdatedAt(LocalDateTime.now());
 
         // 6. 保存用户信息
         this.save(user);
@@ -111,8 +102,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public LoginVO login(LoginDTO loginDTO) {
         // 1. 通过用户名、邮箱或手机号查询用户
-        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getEmail, loginDTO.getAccount())
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>()
+                .eq(User::getEmail, loginDTO.getAccount())
                 .or()
                 .eq(User::getPhone, loginDTO.getAccount());
 
@@ -166,9 +157,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 2. 检查用户名是否已存在（如果要修改用户名）
         if (StringUtils.hasText(userDTO.getUsername()) && !userDTO.getUsername().equals(user.getUsername())) {
-            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(User::getUsername, userDTO.getUsername());
-            long count = count(queryWrapper);
+
+            long count = count(new LambdaQueryWrapper<User>().eq(User::getUsername, userDTO.getUsername()));
             if (count > 0) {
                 throw new RuntimeException("用户名已存在");
             }
@@ -176,9 +166,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 3. 检查邮箱是否已存在（如果要修改邮箱）
         if (StringUtils.hasText(userDTO.getEmail()) && !userDTO.getEmail().equals(user.getEmail())) {
-            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(User::getEmail, userDTO.getEmail());
-            long count = count(queryWrapper);
+
+            long count = count(new LambdaQueryWrapper<User>().eq(User::getEmail, userDTO.getEmail()));
             if (count > 0) {
                 throw new RuntimeException("邮箱已存在");
             }
@@ -186,9 +175,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 4. 检查手机号是否已存在（如果要修改手机号）
         if (StringUtils.hasText(userDTO.getPhone()) && !userDTO.getPhone().equals(user.getPhone())) {
-            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(User::getPhone, userDTO.getPhone());
-            long count = count(queryWrapper);
+
+            long count = count(new LambdaQueryWrapper<User>().eq(User::getPhone, userDTO.getPhone()));
             if (count > 0) {
                 throw new RuntimeException("手机号已存在");
             }
@@ -214,8 +202,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             throw new RuntimeException("无权限");
         }
         Page<User> page = userQuery.toMpPage("last_login_at", false);
-        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
-        wrapper.like(StringUtils.hasText(userQuery.getUsername()), User::getUsername, userQuery.getUsername())
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<User>()
+                .like(StringUtils.hasText(userQuery.getUsername()), User::getUsername, userQuery.getUsername())
                 .eq(StringUtils.hasText(userQuery.getPhone()), User::getPhone, userQuery.getPhone())
                 .eq(StringUtils.hasText(userQuery.getEmail()), User::getEmail, userQuery.getEmail())
                 .eq(userQuery.getStatus() != null, User::getStatus, userQuery.getStatus())
@@ -255,5 +243,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public String sendVerificationCode(String phone) {
         return VerificationCode.generate(phone);
+    }
+
+    @Override
+    public UserVO resetPassword(ResetPasswordDTO resetPasswordDTO) {
+        // 1. 验证验证码是否正确
+        if (!VerificationCode.verify(resetPasswordDTO.getPhone(), resetPasswordDTO.getVerificationCode())) {
+            throw new RuntimeException("验证码错误");
+        }
+        // 2. 检查新密码是否一致
+        if (!Objects.equals(resetPasswordDTO.getNewPassword(), resetPasswordDTO.getConfirmNewPassword())) {
+            throw new RuntimeException("两次输入的密码不一致");
+        }
+        // 3. 通过手机号查询用户
+        User user = getOne(new LambdaQueryWrapper<User>().eq(User::getPhone, resetPasswordDTO.getPhone()));
+        if (user == null) {
+            throw new RuntimeException("用户不存在");
+        }
+        // 4. 更新密码
+        user.setPassword(passwordEncoder.encode(resetPasswordDTO.getNewPassword()));
+        user.setUpdatedAt(LocalDateTime.now());
+        updateById(user);
+        return BeanUtil.copyProperties(user, UserVO.class);
     }
 }
