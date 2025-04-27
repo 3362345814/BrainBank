@@ -57,7 +57,7 @@ spring:
             - StripPrefix=0
 
 server:
-  port: 10000  # 网关服务端口
+  port: 10001  # 网关服务端口
 
 ip: 118.89.73.14
 password: lxh123456

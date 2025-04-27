@@ -31,8 +31,20 @@ spring:
       username: nacos
       password: ${password}
 
+  data:
+    redis:
+      timeout: 6000
+      password: ${password}
+      sentinel:
+        nodes:
+          - ${ip}:26379
+          - ${ip}:26380
+          - ${ip}:26381
+        master: mymaster
+
+
 mybatis-plus:
-  type-aliases-package: com.cityseason.user.domain.po
+  type-aliases-package: com.cityseason.content.domain.po
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
@@ -50,3 +62,5 @@ server:
 ip: 118.89.73.14
 password: lxh123456
 db_name: content_db
+
+
