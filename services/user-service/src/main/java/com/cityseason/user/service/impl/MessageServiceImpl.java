@@ -10,6 +10,7 @@ import com.cityseason.user.domain.enums.UserRole;
 import com.cityseason.user.domain.po.Message;
 import com.cityseason.user.domain.po.MessageUser;
 import com.cityseason.user.domain.po.User;
+import com.cityseason.user.domain.vo.MessageUserVO;
 import com.cityseason.user.domain.vo.MessageVO;
 import com.cityseason.user.mapper.MessageMapper;
 import com.cityseason.user.mapper.UserMapper;
@@ -55,6 +56,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
         Message message = new Message();
         BeanUtils.copyProperties(messageDTO, message);
         message.setType(MessageType.SYSTEM);
+        message.setUserId(user.getId());
         save(message);
 
 
@@ -74,10 +76,11 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
 
         // 发送消息到RabbitMQ
         for (MessageUser messageUser : messageUsers) {
+            MessageUserVO messageUserVO = new MessageUserVO(message, messageUser);
             rabbitTemplate.convertAndSend(
                     RabbitConfig.EXCHANGE_NAME,
                     RabbitConfig.ROUTING_KEY,
-                    messageUser
+                    messageUserVO
             );
         }
 
