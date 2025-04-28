@@ -95,8 +95,12 @@ public class ContentController {
     @GetMapping("/page")
     @OperationLog(module = "内容服务", operation = "分页查询内容")
     public Result<PageDTO<ContentVO>> queryPage(ContentQuery ContentQuery) {
-        PageDTO<ContentVO> pageDTO = contentService.queryContentPage(ContentQuery);
-        return Result.success(pageDTO);
+        try {
+            PageDTO<ContentVO> pageDTO = contentService.queryContentPage(ContentQuery);
+            return Result.success(pageDTO);
+        } catch (Exception e) {
+            return Result.failure(400, e.getMessage());
+        }
     }
     /**
      * 根据id查询内容
@@ -107,7 +111,11 @@ public class ContentController {
     @GetMapping("/{id}")
     @OperationLog(module = "内容服务", operation = "根据id查询内容")
     public Result<ContentVO> queryById(@PathVariable Long id) {
-        ContentVO contentVO = contentService.queryById(id);
-        return Result.success(contentVO);
+        try {
+            ContentVO contentVO = contentService.queryById(id);
+            return Result.success(contentVO);
+        } catch (Exception e) {
+            return Result.failure(400, e.getMessage());
+        }
     }
 }

@@ -19,6 +19,7 @@
         <module>gateway-service</module>
         <module>common-service</module>
         <module>log-service</module>
+        <module>api</module>
     </modules>
 
     <artifactId>services</artifactId>

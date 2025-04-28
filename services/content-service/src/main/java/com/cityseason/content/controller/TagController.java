@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 标签管理
  *
@@ -32,14 +34,13 @@ public class TagController {
     @GetMapping("/add")
     @OperationLog(module = "标签管理", operation = "新增标签")
     public Result<TagVO> addTag(@Valid @RequestBody TagDTO tagDTO) {
-        try {
-            TagVO tagVO = tagService.addTag(tagDTO);
-            return Result.success(tagVO);
-        }
-        catch (Exception e) {
-            return Result.failure(400, e.getMessage());
-        }
-
+            try {
+                TagVO tagVO = tagService.addTag(tagDTO);
+                return Result.success(tagVO);
+            }
+            catch (Exception e) {
+                return Result.failure(400, e.getMessage());
+            }
     }
     /**
      * 删除标签
@@ -94,6 +95,28 @@ public class TagController {
             TagVO tagVO = new TagVO();
             BeanUtils.copyProperties(tag, tagVO);
             return Result.success(tagVO);
+        }
+        catch (Exception e) {
+            return Result.failure(400, e.getMessage());
+        }
+    }
+    /**
+     * 列表查询标签
+     *
+     * @param
+     * @return 标签信息
+     */
+    @GetMapping("/list")
+    @OperationLog(module = "标签管理", operation = "列表查询标签")
+    public Result<List<TagVO>> listTag() {
+        try {
+            List<Tag> tagList = tagService.listTag();
+            List<TagVO> tagVOList = tagList.stream().map(tag -> {
+                TagVO tagVO = new TagVO();
+                BeanUtils.copyProperties(tag, tagVO);
+                return tagVO;
+            }).toList();
+            return Result.success(tagVOList);
         }
         catch (Exception e) {
             return Result.failure(400, e.getMessage());

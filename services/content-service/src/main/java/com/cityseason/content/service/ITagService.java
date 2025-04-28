@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.cityseason.content.domain.vo.TagVO;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -17,4 +19,6 @@ import jakarta.validation.Valid;
 public interface ITagService extends IService<Tag> {
 
     TagVO addTag(@Valid TagDTO tagDTO);
+
+    List<Tag> listTag();
 }
