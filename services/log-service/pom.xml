@@ -18,6 +18,12 @@
     </properties>
 
     <dependencies>
+        <!-- api -->
+        <dependency>
+            <groupId>com.cityseason</groupId>
+            <artifactId>api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

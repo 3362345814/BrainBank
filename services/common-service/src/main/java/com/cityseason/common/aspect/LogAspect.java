@@ -1,9 +1,9 @@
 package com.cityseason.common.aspect;
 
+import com.cityseason.api.client.LogClient;
+import com.cityseason.api.domin.po.ApiAccessLog;
+import com.cityseason.api.domin.po.ErrorLog;
 import com.cityseason.log.annotation.OperationLog;
-import com.cityseason.log.client.LogClient;
-import com.cityseason.log.domain.po.ApiAccessLog;
-import com.cityseason.log.domain.po.ErrorLog;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -151,7 +151,7 @@ public class LogAspect {
             OperationLog annotation = method.getAnnotation(OperationLog.class);
 
             // 创建操作日志对象
-            com.cityseason.log.domain.po.OperationLog operationLog = new com.cityseason.log.domain.po.OperationLog();
+            com.cityseason.api.domin.po.OperationLog operationLog = new com.cityseason.api.domin.po.OperationLog();
 
             // 从请求头或会话中获取用户信息
             String userId = request.getHeader("x-user-id");

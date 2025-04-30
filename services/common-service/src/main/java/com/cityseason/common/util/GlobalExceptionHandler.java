@@ -1,7 +1,7 @@
 package com.cityseason.common.util;
 
 
-import com.cityseason.common.domain.vo.Result;
+import com.cityseason.api.domin.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;

@@ -1,9 +1,9 @@
 package com.cityseason.log.controller;
 
-import com.cityseason.log.domain.po.ApiAccessLog;
-import com.cityseason.log.domain.po.ErrorLog;
-import com.cityseason.log.domain.po.LoginLog;
-import com.cityseason.log.domain.po.OperationLog;
+import com.cityseason.api.domin.po.ApiAccessLog;
+import com.cityseason.api.domin.po.ErrorLog;
+import com.cityseason.api.domin.po.LoginLog;
+import com.cityseason.api.domin.po.OperationLog;
 import com.cityseason.log.service.LogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

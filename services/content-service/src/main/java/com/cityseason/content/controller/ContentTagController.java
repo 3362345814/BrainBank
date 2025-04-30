@@ -1,24 +1,20 @@
 package com.cityseason.content.controller;
 
 
+import com.cityseason.api.domin.vo.Result;
 import com.cityseason.common.domain.dto.PageDTO;
-import com.cityseason.common.domain.vo.Result;
 import com.cityseason.content.domain.dto.ContentTagDTO;
 import com.cityseason.content.domain.query.ContentTagQuery;
 import com.cityseason.content.domain.vo.ContentTagVO;
-import com.cityseason.content.domain.vo.TagVO;
 import com.cityseason.content.service.impl.ContentTagServiceImpl;
 import com.cityseason.content.service.impl.TagServiceImpl;
 import com.cityseason.log.annotation.OperationLog;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
- *  内容标签管理
+ * 内容标签管理
  *
  * @author author
  * @since 2025-04-26
@@ -29,6 +25,7 @@ import java.util.List;
 public class ContentTagController {
     private final TagServiceImpl tagService;
     private final ContentTagServiceImpl contentTagService;
+
     /**
      * 添加标签
      *
@@ -41,11 +38,11 @@ public class ContentTagController {
         try {
             ContentTagVO ContentTagVO = contentTagService.addTag(ContentTagDTO);
             return Result.success(ContentTagVO);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return Result.failure(400, e.getMessage());
         }
     }
+
     /**
      * 删除标签
      *
@@ -58,17 +55,16 @@ public class ContentTagController {
         try {
             contentTagService.removeById(id);
             return Result.success(true);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return Result.failure(400, e.getMessage());
         }
     }
+
     /**
      * 修改内容标签
      *
      * @param ContentTagDTO 标签信息
      * @return 标签信息
-     *
      */
     @PutMapping
     @OperationLog(module = "内容标签管理", operation = "修改内容标签")
@@ -76,28 +72,27 @@ public class ContentTagController {
         try {
             ContentTagVO ContentTagVO = contentTagService.updateTag(ContentTagDTO);
             return Result.success(ContentTagVO);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return Result.failure(400, e.getMessage());
         }
     }
-   /**
+
+    /**
      * 分页获取标签列表
      *
-     * @
      * @return
+     * @
      */
-   @GetMapping("/page")
-   @OperationLog(module = "内容标签管理", operation = "分页获取内容标签列表")
+    @GetMapping("/page")
+    @OperationLog(module = "内容标签管理", operation = "分页获取内容标签列表")
     public Result<PageDTO<ContentTagVO>> page(@Valid ContentTagQuery ContentTagQuery) {
-       try {
-           PageDTO<ContentTagVO> page = contentTagService.queryByPage(ContentTagQuery);
-           return Result.success(page);
-       }
-       catch (Exception e) {
-           return Result.failure(400, e.getMessage());
-       }
-   }
+        try {
+            PageDTO<ContentTagVO> page = contentTagService.queryByPage(ContentTagQuery);
+            return Result.success(page);
+        } catch (Exception e) {
+            return Result.failure(400, e.getMessage());
+        }
+    }
 
 
 }

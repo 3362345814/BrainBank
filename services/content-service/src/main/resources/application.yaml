@@ -27,7 +27,7 @@ spring:
 
   cloud:
     nacos:
-      server-addr: ${ip}:8848
+      server-addr: ${nacos-ip}:8848
       username: nacos
       password: ${password}
 
@@ -60,6 +60,7 @@ server:
 
 
 ip: 118.89.73.14
+nacos-ip: 117.33.163.179
 password: lxh123456
 db_name: content_db
 

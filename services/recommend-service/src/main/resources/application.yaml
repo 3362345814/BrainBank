@@ -1,16 +1,72 @@
 spring:
   application:
-    name: recommend-service
+    name: user-service
+
+  datasource:
+    dynamic:
+      primary: master # 设置默认的数据源或者数据源组，默认值即为master
+      strict: false # 严格匹配数据源，默认false. true未匹配到指定数据源时抛异常，false使用默认数据源
+      datasource:
+        master:
+          url: jdbc:mysql://${ip}:3307/${db_name}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+          username: root
+          password: ${password}
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        slave1:
+          url: jdbc:mysql://${ip}:3308/${db_name}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+          username: root
+          password: ${password}
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        slave2:
+          url: jdbc:mysql://${ip}:3309/${db_name}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+          username: root
+          password: ${password}
+          driver-class-name: com.mysql.cj.jdbc.Driver
+      # 负载均衡策略配置
+      strategy: com.baomidou.dynamic.datasource.strategy.LoadBalanceDynamicDataSourceStrategy
+
   cloud:
     nacos:
-      server-addr: ${ip}:8848
+      server-addr: ${nacos-ip}:8848
       username: nacos
-      password: lxh123456
+      password: ${password}
+
+  data:
+    redis:
+      timeout: 6000
+      password: ${password}
+      sentinel:
+        nodes:
+          - ${ip}:26379
+          - ${ip}:26380
+          - ${ip}:26381
+        master: mymaster
+
+  rabbitmq:
+    host: ${ip}
+    port: 5672
+    username: rabbitmq
+    password: ${password}
 
 
+mybatis-plus:
+  type-aliases-package: com.cityseason.user.domain.po
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+  global-config:
+    db-config:
+      id-type: assign_id
+
+
+server:
+  port: 8080
 
 
 ip: 118.89.73.14
+nacos-ip: 117.33.163.179
+password: lxh123456
+db_name: recommend_db
 
-server:
-  port: 8081

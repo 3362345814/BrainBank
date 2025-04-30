@@ -1,7 +1,7 @@
 package com.cityseason.log.mapper;
 
-import com.cityseason.log.domain.po.ErrorLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cityseason.api.domin.po.ErrorLog;
 
 /**
  * <p>

@@ -1,8 +1,8 @@
 package com.cityseason.content.controller;
 
 
+import com.cityseason.api.domin.vo.Result;
 import com.cityseason.common.domain.dto.PageDTO;
-import com.cityseason.common.domain.vo.Result;
 import com.cityseason.content.domain.dto.ContentDTO;
 import com.cityseason.content.domain.po.Content;
 import com.cityseason.content.domain.query.ContentQuery;
@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ContentController {
     private final ContentServiceImpl contentService;
+
     /**
      * 添加内容
      *
@@ -43,11 +44,12 @@ public class ContentController {
         } catch (Exception e) {
             return Result.failure(400, e.getMessage());
         }
-        if(contentVO != null) {
+        if (contentVO != null) {
             return Result.success(contentVO);
         }
         return Result.failure(500, "添加内容失败");
     }
+
     /**
      * 删除内容
      *
@@ -60,11 +62,11 @@ public class ContentController {
         try {
             contentService.removeById(id);
             return Result.success("success");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return Result.failure(400, e.getMessage());
         }
     }
+
     /**
      * 修改内容
      *
@@ -80,14 +82,13 @@ public class ContentController {
         try {
             contentVO = contentService.updateContent(contentDTO);
             return Result.success(contentVO);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return Result.failure(400, e.getMessage());
         }
     }
+
     /**
      * 分页查询内容
-     *
      *
      * @param ContentQuery
      * @return
@@ -102,6 +103,7 @@ public class ContentController {
             return Result.failure(400, e.getMessage());
         }
     }
+
     /**
      * 根据id查询内容
      *

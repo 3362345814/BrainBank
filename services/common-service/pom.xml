@@ -18,16 +18,6 @@
     </properties>
 
     <dependencies>
-        <!-- MyBatisPlus -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-jsqlparser</artifactId>
-        </dependency>
-
         <!-- 动态数据源 -->
         <dependency>
             <groupId>com.baomidou</groupId>

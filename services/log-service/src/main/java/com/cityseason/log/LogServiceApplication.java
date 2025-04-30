@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @MapperScan("com.cityseason.log.mapper")
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.cityseason.api.client")
 @EnableAsync
 public class LogServiceApplication {
     public static void main(String[] args) {

@@ -1,7 +1,7 @@
 package com.cityseason.user.controller;
 
 
-import com.cityseason.common.domain.vo.Result;
+import com.cityseason.api.domin.vo.Result;
 import com.cityseason.log.annotation.OperationLog;
 import com.cityseason.user.domain.dto.SellerRegistrationDTO;
 import com.cityseason.user.domain.vo.SellerRegistrationVO;

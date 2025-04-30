@@ -4,6 +4,9 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cityseason.api.domin.enums.UserRole;
+import com.cityseason.api.domin.enums.UserStatus;
+import com.cityseason.api.domin.vo.UserVO;
 import com.cityseason.common.domain.dto.PageDTO;
 import com.cityseason.common.util.RequestContext;
 import com.cityseason.common.util.VerificationCode;
@@ -11,13 +14,10 @@ import com.cityseason.user.domain.dto.LoginDTO;
 import com.cityseason.user.domain.dto.RegisterDTO;
 import com.cityseason.user.domain.dto.ResetPasswordDTO;
 import com.cityseason.user.domain.dto.UserDTO;
-import com.cityseason.user.domain.enums.UserRole;
-import com.cityseason.user.domain.enums.UserStatus;
 import com.cityseason.user.domain.po.User;
 import com.cityseason.user.domain.po.Wallet;
 import com.cityseason.user.domain.query.UserQuery;
 import com.cityseason.user.domain.vo.LoginVO;
-import com.cityseason.user.domain.vo.UserVO;
 import com.cityseason.user.mapper.UserMapper;
 import com.cityseason.user.service.IUserService;
 import com.cityseason.user.service.IWalletService;
@@ -198,7 +198,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public PageDTO<UserVO> queryUserPage(UserQuery userQuery) {
         User user = getById(RequestContext.getCurrentUserId());
         // 检查用户是否是管理员
-        if (!UserRole.ADMIN.equals(user.getRole())) {
+        if (!UserRole.SUPER_ADMIN.equals(user.getRole())) {
             throw new RuntimeException("无权限");
         }
         Page<User> page = userQuery.toMpPage("last_login_at", false);
@@ -221,7 +221,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public UserVO updateUserStatus(Long id, UserStatus status) {
         User requestUser = getById(RequestContext.getCurrentUserId());
         // 检查用户是否是管理员
-        if (!UserRole.ADMIN.equals(requestUser.getRole())) {
+        if (!UserRole.ADMIN.equals(requestUser.getRole()) && !UserRole.SUPER_ADMIN.equals(requestUser.getRole())) {
             throw new RuntimeException("无权限");
         }
         // 检查用户是否存在

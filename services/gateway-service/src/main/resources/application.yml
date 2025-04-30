@@ -4,7 +4,7 @@ spring:
 
   cloud:
     nacos:
-      server-addr: ${ip}:8848
+      server-addr: ${nacos-ip}:8848
       username: nacos
       password: ${password}
       discovery:
@@ -59,7 +59,7 @@ spring:
 server:
   port: 10001  # 网关服务端口
 
-ip: 118.89.73.14
+nacos-ip: 117.33.163.179
 password: lxh123456
 
 jwt:
