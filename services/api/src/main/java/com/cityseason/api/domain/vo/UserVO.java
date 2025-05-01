@@ -1,8 +1,8 @@
-package com.cityseason.api.domin.vo;
+package com.cityseason.api.domain.vo;
 
 
-import com.cityseason.api.domin.enums.UserRole;
-import com.cityseason.api.domin.enums.UserStatus;
+import com.cityseason.api.domain.enums.UserRole;
+import com.cityseason.api.domain.enums.UserStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

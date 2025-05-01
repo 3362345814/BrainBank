@@ -1,6 +1,6 @@
 spring:
   application:
-    name: user-service
+    name: recommend-service
 
   datasource:
     dynamic:
@@ -50,7 +50,7 @@ spring:
 
 
 mybatis-plus:
-  type-aliases-package: com.cityseason.user.domain.po
+  type-aliases-package: com.cityseason.recommend.domain.po
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
@@ -62,7 +62,7 @@ mybatis-plus:
 
 
 server:
-  port: 8080
+  port: 8085
 
 
 ip: 118.89.73.14

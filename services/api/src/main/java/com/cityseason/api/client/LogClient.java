@@ -1,10 +1,10 @@
 package com.cityseason.api.client;
 
 
-import com.cityseason.api.domin.po.ApiAccessLog;
-import com.cityseason.api.domin.po.ErrorLog;
-import com.cityseason.api.domin.po.LoginLog;
-import com.cityseason.api.domin.po.OperationLog;
+import com.cityseason.api.domain.po.ApiAccessLog;
+import com.cityseason.api.domain.po.ErrorLog;
+import com.cityseason.api.domain.po.LoginLog;
+import com.cityseason.api.domain.po.OperationLog;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

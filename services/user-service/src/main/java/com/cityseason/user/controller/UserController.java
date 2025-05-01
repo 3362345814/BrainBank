@@ -2,10 +2,10 @@ package com.cityseason.user.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.cityseason.api.client.LogClient;
-import com.cityseason.api.domin.enums.UserStatus;
-import com.cityseason.api.domin.po.LoginLog;
-import com.cityseason.api.domin.vo.Result;
-import com.cityseason.api.domin.vo.UserVO;
+import com.cityseason.api.domain.enums.UserStatus;
+import com.cityseason.api.domain.po.LoginLog;
+import com.cityseason.api.domain.vo.Result;
+import com.cityseason.api.domain.vo.UserVO;
 import com.cityseason.common.domain.dto.PageDTO;
 import com.cityseason.log.annotation.OperationLog;
 import com.cityseason.user.domain.dto.LoginDTO;

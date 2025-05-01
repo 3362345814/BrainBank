@@ -1,9 +1,9 @@
 package com.cityseason.api.client;
 
-import com.cityseason.api.domin.po.ApiAccessLog;
-import com.cityseason.api.domin.po.ErrorLog;
-import com.cityseason.api.domin.po.LoginLog;
-import com.cityseason.api.domin.po.OperationLog;
+import com.cityseason.api.domain.po.ApiAccessLog;
+import com.cityseason.api.domain.po.ErrorLog;
+import com.cityseason.api.domain.po.LoginLog;
+import com.cityseason.api.domain.po.OperationLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;

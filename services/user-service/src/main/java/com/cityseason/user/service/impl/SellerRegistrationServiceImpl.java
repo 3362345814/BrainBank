@@ -3,7 +3,7 @@ package com.cityseason.user.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cityseason.api.domin.enums.UserRole;
+import com.cityseason.api.domain.enums.UserRole;
 import com.cityseason.common.annotation.AddCache;
 import com.cityseason.common.annotation.DelCache;
 import com.cityseason.common.util.RequestContext;

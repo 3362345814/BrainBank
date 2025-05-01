@@ -1,17 +1,18 @@
 package com.cityseason.content.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.cityseason.common.domain.dto.PageDTO;
 import com.cityseason.content.domain.dto.ContentTagDTO;
 import com.cityseason.content.domain.po.ContentTag;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.cityseason.content.domain.query.ContentTagQuery;
 import com.cityseason.content.domain.vo.ContentTagVO;
-import com.cityseason.content.domain.vo.TagVO;
 import jakarta.validation.Valid;
+
+import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author author
@@ -24,4 +25,6 @@ public interface IContentTagService extends IService<ContentTag> {
     ContentTagVO updateTag(@Valid ContentTagDTO contentTagDTO);
 
     PageDTO<ContentTagVO> queryByPage(@Valid ContentTagQuery contentTagQuery);
+
+    List<ContentTagVO> selectByContentId(Long contentId);
 }

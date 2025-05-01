@@ -1,6 +1,6 @@
 package com.cityseason.user.domain.vo;
 
-import com.cityseason.api.domin.vo.UserVO;
+import com.cityseason.api.domain.vo.UserVO;
 import com.cityseason.user.domain.po.Wallet;
 import lombok.AllArgsConstructor;
 import lombok.Data;

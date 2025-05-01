@@ -1,7 +1,7 @@
 package com.cityseason.content.controller;
 
 
-import com.cityseason.api.domin.vo.Result;
+import com.cityseason.api.domain.vo.Result;
 import com.cityseason.common.domain.dto.PageDTO;
 import com.cityseason.content.domain.dto.ContentDTO;
 import com.cityseason.content.domain.po.Content;

@@ -1,4 +1,4 @@
-package com.cityseason.content.domain.vo;
+package com.cityseason.api.domain.vo;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.cityseason.api.domin.po;
+package com.cityseason.api.domain.po;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

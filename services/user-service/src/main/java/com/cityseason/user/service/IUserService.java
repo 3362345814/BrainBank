@@ -1,8 +1,8 @@
 package com.cityseason.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cityseason.api.domin.enums.UserStatus;
-import com.cityseason.api.domin.vo.UserVO;
+import com.cityseason.api.domain.enums.UserStatus;
+import com.cityseason.api.domain.vo.UserVO;
 import com.cityseason.common.domain.dto.PageDTO;
 import com.cityseason.user.domain.dto.LoginDTO;
 import com.cityseason.user.domain.dto.RegisterDTO;
