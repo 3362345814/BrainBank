@@ -3,6 +3,7 @@ package com.cityseason.recommend.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cityseason.recommend.domain.dto.UserBehaviorLogDTO;
 import com.cityseason.recommend.domain.po.UserBehaviorLog;
+import com.cityseason.recommend.domain.vo.UserBehaviorLogVO;
 
 /**
  * <p>
@@ -14,5 +15,5 @@ import com.cityseason.recommend.domain.po.UserBehaviorLog;
  */
 public interface IUserBehaviorLogService extends IService<UserBehaviorLog> {
 
-    UserBehaviorLog record(UserBehaviorLogDTO userBehaviorLogDTO);
+    UserBehaviorLogVO record(UserBehaviorLogDTO userBehaviorLogDTO);
 }

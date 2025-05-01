@@ -11,6 +11,7 @@ import com.cityseason.common.util.RequestContext;
 import com.cityseason.recommend.domain.dto.UserBehaviorLogDTO;
 import com.cityseason.recommend.domain.po.UserBehaviorLog;
 import com.cityseason.recommend.domain.po.UserInterestProfile;
+import com.cityseason.recommend.domain.vo.UserBehaviorLogVO;
 import com.cityseason.recommend.mapper.UserBehaviorLogMapper;
 import com.cityseason.recommend.service.IUserBehaviorLogService;
 import com.cityseason.recommend.service.IUserInterestProfileService;
@@ -41,7 +42,7 @@ public class UserBehaviorLogServiceImpl extends ServiceImpl<UserBehaviorLogMappe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserBehaviorLog record(UserBehaviorLogDTO userBehaviorLogDTO) {
+    public UserBehaviorLogVO record(UserBehaviorLogDTO userBehaviorLogDTO) {
         if (!userBehaviorLogDTO.getUserId().equals(RequestContext.getCurrentUserId())) {
             throw new RuntimeException("无权限");
         }
@@ -56,7 +57,7 @@ public class UserBehaviorLogServiceImpl extends ServiceImpl<UserBehaviorLogMappe
         List<Long> tagIds = result.getData().stream().map(ContentTagVO::getTagId).toList();
 
         if (tagIds.isEmpty()) {
-            return userBehaviorLog;
+            return BeanUtil.copyProperties(userBehaviorLog, UserBehaviorLogVO.class);
         }
 
         // 查询数据库中是否存在该用户的兴趣画像
@@ -101,6 +102,6 @@ public class UserBehaviorLogServiceImpl extends ServiceImpl<UserBehaviorLogMappe
             Db.updateById(userInterestProfile);
         }
 
-        return userBehaviorLog;
+        return BeanUtil.copyProperties(userBehaviorLog, UserBehaviorLogVO.class);
     }
 }

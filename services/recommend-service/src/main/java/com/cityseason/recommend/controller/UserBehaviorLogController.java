@@ -4,7 +4,7 @@ package com.cityseason.recommend.controller;
 import com.cityseason.api.domain.vo.Result;
 import com.cityseason.log.annotation.OperationLog;
 import com.cityseason.recommend.domain.dto.UserBehaviorLogDTO;
-import com.cityseason.recommend.domain.po.UserBehaviorLog;
+import com.cityseason.recommend.domain.vo.UserBehaviorLogVO;
 import com.cityseason.recommend.service.IUserBehaviorLogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,9 +35,9 @@ public class UserBehaviorLogController {
      */
     @PostMapping("/record")
     @OperationLog(module = "用户行为日志", operation = "记录用户行为")
-    public Result<UserBehaviorLog> record(@RequestBody UserBehaviorLogDTO UserBehaviorLogDTO) {
+    public Result<UserBehaviorLogVO> record(@RequestBody UserBehaviorLogDTO UserBehaviorLogDTO) {
         try {
-            UserBehaviorLog userBehaviorLog = userBehaviorLogService.record(UserBehaviorLogDTO);
+            UserBehaviorLogVO userBehaviorLog = userBehaviorLogService.record(UserBehaviorLogDTO);
             return Result.success(userBehaviorLog);
         } catch (Exception e) {
 
